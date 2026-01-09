@@ -1,20 +1,18 @@
 import React from 'react';
 
 interface BulbProps {
-  brightness: number; // 0 to 1.5 (can go higher for effect)
+  brightness: number; 
   isOn: boolean;
 }
 
 export const Bulb: React.FC<BulbProps> = ({ brightness, isOn }) => {
-  // Clamp brightness for color interpolation but allow higher for glow radius
   const effectiveBrightness = isOn ? Math.max(0.1, brightness) : 0;
   
-  // Calculate glow color: dim orange -> bright yellow -> white hot
   const getFilamentColor = (b: number) => {
     if (!isOn) return "#555";
-    if (b < 0.5) return `rgb(255, ${100 + b * 200}, 0)`; // Orangeish
-    if (b < 1.0) return `rgb(255, 255, ${b * 100})`; // Yellowish
-    return "#FFF"; // White hot
+    if (b < 0.5) return `rgb(255, ${100 + b * 200}, 0)`; 
+    if (b < 1.0) return `rgb(255, 255, ${b * 100})`; 
+    return "#FFF"; 
   };
 
   const glowOpacity = isOn ? Math.min(0.8, brightness * 0.6) : 0;
@@ -22,6 +20,12 @@ export const Bulb: React.FC<BulbProps> = ({ brightness, isOn }) => {
 
   return (
     <g transform="translate(200, 80)">
+      <defs>
+        <filter id="blurMe">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+        </filter>
+      </defs>
+
       {/* Glow Effect */}
       {isOn && (
         <circle cx="0" cy="0" r={glowRadius} fill="gold" fillOpacity={glowOpacity} filter="url(#blurMe)" />
@@ -49,13 +53,6 @@ export const Bulb: React.FC<BulbProps> = ({ brightness, isOn }) => {
       
       {/* Connection Points */}
       <circle cx="0" cy="25" r="2" fill="#333" />
-      
-      {/* Definitions for glow blur */}
-      <defs>
-        <filter id="blurMe">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
-        </filter>
-      </defs>
     </g>
   );
 };
