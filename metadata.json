@@ -1,0 +1,5 @@
+{
+  "name": "전구 밝기 실험실 (Circuit Sim)",
+  "description": "전지의 직렬/병렬 연결과 개수에 따른 전구의 밝기 변화를 시뮬레이션하는 교육용 웹 애플리케이션입니다.",
+  "requestFramePermissions": []
+}
